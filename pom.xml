@@ -16,10 +16,17 @@
         <module>mall-ware</module>
         <module>mall-member</module>
         <module>mall-coupon</module>
+        <module>renren-fast</module>
+        <module>renren-generator</module>
+        <module>mall-common</module>
     </modules>
 
     <properties>
         <java.version>1.8</java.version>
+        <mysql.version>5.1.47</mysql.version>
+        <mybatis.plus.version>3.3.1</mybatis.plus.version>
+        <lombok.version>1.18.12</lombok.version>
+        <commons.lang.version>2.6</commons.lang.version>
         <spring.cloud.version>Greenwich.SR3</spring.cloud.version>
         <maven.compiler.source>8</maven.compiler.source>
         <maven.compiler.target>8</maven.compiler.target>
@@ -52,10 +59,28 @@
             </dependency>
 
             <dependency>
-                <groupId>org.springframework.cloud</groupId>
-                <artifactId>spring-cloud-dependencies</artifactId>
-                <version>Hoxton.SR1</version>
+                <groupId>mysql</groupId>
+                <artifactId>mysql-connector-java</artifactId>
+                <version>${mysql.version}</version>
             </dependency>
+
+            <dependency>
+                <groupId>org.projectlombok</groupId>
+                <artifactId>lombok</artifactId>
+                <version>${lombok.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>com.baomidou</groupId>
+                <artifactId>mybatis-plus-boot-starter</artifactId>
+                <version>${mybatis.plus.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>commons-lang</groupId>
+                <artifactId>commons-lang</artifactId>
+                <version>${commons.lang.version}</version>
+            </dependency>
+
         </dependencies>
     </dependencyManagement>
 
