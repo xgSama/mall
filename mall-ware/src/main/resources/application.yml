@@ -1,11 +1,11 @@
 server:
-  port: 11000
+  port: 10000
 
 spring:
   datasource:
     username: root
     password: cyz19980815
-    url: jdbc:mysql://xgsama:3307/mall_wms?useUnicode=true&characterEncoding=UTF-8&useSSL=false&serverTimezone=Asia/Shanghai
+    url: jdbc:mysql://xgsama:3307/mall_pms?useUnicode=true&characterEncoding=UTF-8&useSSL=false&serverTimezone=Asia/Shanghai
     driver-class-name: com.mysql.jdbc.Driver
 
 

@@ -7,6 +7,13 @@ spring:
     password: cyz19980815
     url: jdbc:mysql://xgsama:3307/mall_sms?useUnicode=true&characterEncoding=UTF-8&useSSL=false&serverTimezone=Asia/Shanghai
     driver-class-name: com.mysql.jdbc.Driver
+  application:
+    name: mall-coupon
+
+  cloud:
+    nacos:
+      discovery:
+        server-addr: nacos:8848
 
 
 mybatis-plus:
