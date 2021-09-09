@@ -2,16 +2,17 @@ package com.xgsama.mall.product.entity;
 
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
-import lombok.Data;
 
 import java.io.Serializable;
+import java.util.Date;
+import lombok.Data;
 
 /**
  * 商品评价回复关系
  * 
  * @author xgsama
  * @email china_cyzyc@163.com
- * @date 2021-09-08 21:02:19
+ * @date 2021-09-09 19:51:53
  */
 @Data
 @TableName("pms_comment_replay")

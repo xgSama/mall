@@ -1,14 +1,20 @@
 package com.xgsama.mall.product.controller;
 
-import com.xgsama.common.utils.PageUtils;
-import com.xgsama.common.utils.R;
-import com.xgsama.mall.product.entity.UndoLogEntity;
-import com.xgsama.mall.product.service.UndoLogService;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.*;
-
 import java.util.Arrays;
 import java.util.Map;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RestController;
+
+import com.xgsama.mall.product.entity.UndoLogEntity;
+import com.xgsama.mall.product.service.UndoLogService;
+import com.xgsama.common.utils.PageUtils;
+import com.xgsama.common.utils.R;
+
 
 
 /**
@@ -16,7 +22,7 @@ import java.util.Map;
  *
  * @author xgsama
  * @email china_cyzyc@163.com
- * @date 2021-09-08 21:25:00
+ * @date 2021-09-09 19:51:52
  */
 @RestController
 @RequestMapping("product/undolog")

@@ -1,16 +1,16 @@
 package com.xgsama.mall.product.service.impl;
 
+import org.springframework.stereotype.Service;
+import java.util.Map;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.xgsama.common.utils.PageUtils;
 import com.xgsama.common.utils.Query;
+
 import com.xgsama.mall.product.dao.SpuImagesDao;
 import com.xgsama.mall.product.entity.SpuImagesEntity;
 import com.xgsama.mall.product.service.SpuImagesService;
-import org.springframework.stereotype.Service;
-
-import java.util.Map;
 
 
 @Service("spuImagesService")

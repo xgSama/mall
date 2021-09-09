@@ -10,33 +10,33 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.xgsama.mall.product.entity.CommentReplayEntity;
-import com.xgsama.mall.product.service.CommentReplayService;
+import com.xgsama.mall.product.entity.AttrAttrgroupRelationEntity;
+import com.xgsama.mall.product.service.AttrAttrgroupRelationService;
 import com.xgsama.common.utils.PageUtils;
 import com.xgsama.common.utils.R;
 
 
 
 /**
- * 商品评价回复关系
+ * 属性&属性分组关联
  *
  * @author xgsama
  * @email china_cyzyc@163.com
  * @date 2021-09-09 19:51:53
  */
 @RestController
-@RequestMapping("product/commentreplay")
-public class CommentReplayController {
+@RequestMapping("product/attrattrgrouprelation")
+public class AttrAttrgroupRelationController {
     @Autowired
-    private CommentReplayService commentReplayService;
+    private AttrAttrgroupRelationService attrAttrgroupRelationService;
 
     /**
      * 列表
      */
     @RequestMapping("/list")
-    // @RequiresPermissions("product:commentreplay:list")
+    // @RequiresPermissions("product:attrattrgrouprelation:list")
     public R list(@RequestParam Map<String, Object> params){
-        PageUtils page = commentReplayService.queryPage(params);
+        PageUtils page = attrAttrgroupRelationService.queryPage(params);
 
         return R.ok().put("page", page);
     }
@@ -46,20 +46,20 @@ public class CommentReplayController {
      * 信息
      */
     @RequestMapping("/info/{id}")
-    // @RequiresPermissions("product:commentreplay:info")
+    // @RequiresPermissions("product:attrattrgrouprelation:info")
     public R info(@PathVariable("id") Long id){
-		CommentReplayEntity commentReplay = commentReplayService.getById(id);
+		AttrAttrgroupRelationEntity attrAttrgroupRelation = attrAttrgroupRelationService.getById(id);
 
-        return R.ok().put("commentReplay", commentReplay);
+        return R.ok().put("attrAttrgroupRelation", attrAttrgroupRelation);
     }
 
     /**
      * 保存
      */
     @RequestMapping("/save")
-    // @RequiresPermissions("product:commentreplay:save")
-    public R save(@RequestBody CommentReplayEntity commentReplay){
-		commentReplayService.save(commentReplay);
+    // @RequiresPermissions("product:attrattrgrouprelation:save")
+    public R save(@RequestBody AttrAttrgroupRelationEntity attrAttrgroupRelation){
+		attrAttrgroupRelationService.save(attrAttrgroupRelation);
 
         return R.ok();
     }
@@ -68,9 +68,9 @@ public class CommentReplayController {
      * 修改
      */
     @RequestMapping("/update")
-    // @RequiresPermissions("product:commentreplay:update")
-    public R update(@RequestBody CommentReplayEntity commentReplay){
-		commentReplayService.updateById(commentReplay);
+    // @RequiresPermissions("product:attrattrgrouprelation:update")
+    public R update(@RequestBody AttrAttrgroupRelationEntity attrAttrgroupRelation){
+		attrAttrgroupRelationService.updateById(attrAttrgroupRelation);
 
         return R.ok();
     }
@@ -79,9 +79,9 @@ public class CommentReplayController {
      * 删除
      */
     @RequestMapping("/delete")
-    // @RequiresPermissions("product:commentreplay:delete")
+    // @RequiresPermissions("product:attrattrgrouprelation:delete")
     public R delete(@RequestBody Long[] ids){
-		commentReplayService.removeByIds(Arrays.asList(ids));
+		attrAttrgroupRelationService.removeByIds(Arrays.asList(ids));
 
         return R.ok();
     }
