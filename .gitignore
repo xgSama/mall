@@ -182,6 +182,7 @@ buildNumber.properties
 .classpath
 
 # End of https://www.toptal.com/developers/gitignore/api/jetbrains,macos,maven,java
+files/
 !/files/renren_*.zip
 
 node_modules/

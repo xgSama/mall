@@ -15,6 +15,7 @@
         <module name="mall-product" />
         <module name="mall-member" />
         <module name="renren-generator" />
+        <module name="mall-gateway" />
       </profile>
     </annotationProcessing>
   </component>

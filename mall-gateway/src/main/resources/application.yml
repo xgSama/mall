@@ -1,0 +1,21 @@
+server:
+  port: 12000
+
+spring:
+  application:
+    name: mall-gateway
+  cloud:
+    nacos:
+      discovery:
+        server-addr: nacos:8848
+    gateway:
+      routes:
+        - id: bili_route
+          uri: https://www.bilibili.com
+          predicates:
+            - Query=url,bilibili
+        - id: qq_route
+          uri: https://www.qq.com
+          predicates:
+            - Query=url,qq
+
