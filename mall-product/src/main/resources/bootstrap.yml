@@ -1,0 +1,8 @@
+spring:
+  application:
+    name: mall-product
+  cloud:
+    nacos:
+      config:
+        server-addr: nacos:8848
+        namespace: xgsama-dev

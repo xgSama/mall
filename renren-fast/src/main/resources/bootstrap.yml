@@ -1,0 +1,10 @@
+spring:
+  application:
+    name: renren-fast
+  cloud:
+    nacos:
+      config:
+        server-addr: nacos:8848
+        namespace: xgsama-dev
+      discovery:
+        server-addr: nacos:8848

@@ -5,7 +5,7 @@ spring:
   datasource:
     username: root
     password: cyz19980815
-    url: jdbc:mysql://xgsama:3307/mall_wms?useUnicode=true&characterEncoding=UTF-8&useSSL=false&serverTimezone=Asia/Shanghai
+    url: jdbc:mysql://xgsama:3307/mall_pms?useUnicode=true&characterEncoding=UTF-8&useSSL=false&serverTimezone=Asia/Shanghai
     driver-class-name: com.mysql.jdbc.Driver
 
   cloud:
@@ -19,3 +19,18 @@ mybatis-plus:
   global-config:
     db-config:
       id-type: auto
+      logic-delete-value: 1
+      logic-not-delete-value: 0
+
+
+logging:
+  level:
+    com.xgsama.mall.product: debug
+
+
+minio:
+  endpoint: http://minio:9555
+  accessKey: dtstack
+  secretKey: dtstack2021
+  bucket: xgsama-mall
+  gateway: ${minio.endpoint}/${minio.bucket}

@@ -2,8 +2,8 @@ package com.xgsama.mall.mallproduct;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.xgsama.mall.product.MallProductApplication;
-import com.xgsama.mail.product.entity.BrandEntity;
-import com.xgsama.mail.product.service.BrandService;
+import com.xgsama.mall.product.entity.BrandEntity;
+import com.xgsama.mall.product.service.BrandService;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;

@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="AutoImportSettings">
+    <option name="autoReloadType" value="SELECTIVE" />
+  </component>
+  <component name="ChangeListManager">
+    <list default="true" id="fa9dde5a-5cfe-443e-b7ef-46e80ff19c95" name="Default Changelist" comment="">
+      <change beforePath="$PROJECT_DIR$/../mall-gateway/src/main/resources/application.yml" beforeDir="false" afterPath="$PROJECT_DIR$/../mall-gateway/src/main/resources/application.yml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/xgsama/mall/product/controller/CategoryController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/xgsama/mall/product/controller/CategoryController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/xgsama/mall/product/entity/AttrAttrgroupRelationEntity.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/xgsama/mall/product/entity/AttrAttrgroupRelationEntity.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/xgsama/mall/product/entity/AttrEntity.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/xgsama/mall/product/entity/AttrEntity.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/xgsama/mall/product/entity/AttrGroupEntity.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/xgsama/mall/product/entity/AttrGroupEntity.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/xgsama/mall/product/entity/BrandEntity.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/xgsama/mall/product/entity/BrandEntity.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/xgsama/mall/product/entity/CategoryBrandRelationEntity.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/xgsama/mall/product/entity/CategoryBrandRelationEntity.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/xgsama/mall/product/entity/CategoryEntity.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/xgsama/mall/product/entity/CategoryEntity.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/xgsama/mall/product/entity/CommentReplayEntity.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/xgsama/mall/product/entity/CommentReplayEntity.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/xgsama/mall/product/entity/ProductAttrValueEntity.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/xgsama/mall/product/entity/ProductAttrValueEntity.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/xgsama/mall/product/entity/SkuImagesEntity.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/xgsama/mall/product/entity/SkuImagesEntity.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/xgsama/mall/product/entity/SkuInfoEntity.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/xgsama/mall/product/entity/SkuInfoEntity.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/xgsama/mall/product/entity/SkuSaleAttrValueEntity.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/xgsama/mall/product/entity/SkuSaleAttrValueEntity.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/xgsama/mall/product/entity/SpuImagesEntity.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/xgsama/mall/product/entity/SpuImagesEntity.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/xgsama/mall/product/entity/SpuInfoDescEntity.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/xgsama/mall/product/entity/SpuInfoDescEntity.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/xgsama/mall/product/entity/UndoLogEntity.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/xgsama/mall/product/entity/UndoLogEntity.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/xgsama/mall/product/service/CategoryService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/xgsama/mall/product/service/CategoryService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/xgsama/mall/product/service/impl/CategoryServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/xgsama/mall/product/service/impl/CategoryServiceImpl.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/application.yml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/application.yml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/java/com/xgsama/mall/mallproduct/MallProductApplicationTests.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/com/xgsama/mall/mallproduct/MallProductApplicationTests.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../pom.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../renren-fast-vue/build/webpack.base.conf.js" beforeDir="false" afterPath="$PROJECT_DIR$/../renren-fast-vue/build/webpack.base.conf.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../renren-fast-vue/src/utils/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/../renren-fast-vue/src/utils/index.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../renren-fast-vue/src/views/modules/sys/role.vue" beforeDir="false" afterPath="$PROJECT_DIR$/../renren-fast-vue/src/views/modules/sys/role.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../renren-fast-vue/static/config/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/../renren-fast-vue/static/config/index.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../renren-fast/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../renren-fast/pom.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../renren-fast/src/main/java/io/renren/RenrenApplication.java" beforeDir="false" afterPath="$PROJECT_DIR$/../renren-fast/src/main/java/io/renren/RenrenApplication.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../renren-fast/src/main/java/io/renren/config/CorsConfig.java" beforeDir="false" afterPath="$PROJECT_DIR$/../renren-fast/src/main/java/io/renren/config/CorsConfig.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../renren-fast/src/main/resources/application.yml" beforeDir="false" afterPath="$PROJECT_DIR$/../renren-fast/src/main/resources/application.yml" afterDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="CodeStyleSettingsInfer">
+    <option name="done" value="true" />
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/.." />
+  </component>
+  <component name="ProjectCodeStyleSettingsMigration">
+    <option name="version" value="1" />
+  </component>
+  <component name="ProjectId" id="1y2auQznirAK7hgTYIpXgPZE4Ic" />
+  <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent">
+    <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
+    <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
+    <property name="WebServerToolWindowFactoryState" value="false" />
+    <property name="aspect.path.notification.shown" value="true" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
+    <property name="vue.rearranger.settings.migration" value="true" />
+  </component>
+  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="fa9dde5a-5cfe-443e-b7ef-46e80ff19c95" name="Default Changelist" comment="" />
+      <created>1631452360432</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1631452360432</updated>
+      <workItem from="1631452361883" duration="112000" />
+    </task>
+    <servers />
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="3" />
+  </component>
+</project>
