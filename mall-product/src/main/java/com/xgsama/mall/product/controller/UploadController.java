@@ -4,8 +4,12 @@ import com.xgsama.common.utils.R;
 import com.xgsama.mall.product.service.UploadService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
+
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * UploadController
@@ -20,15 +24,14 @@ public class UploadController {
     private UploadService uploadService;
 
     @RequestMapping("/one")
-    public R upload1(MultipartFile multipartFile) {
-        String s = "failed";
+    public R upload1(@RequestParam("file") MultipartFile multipartFile) {
+        Map<String, String> stringStringMap = new HashMap<>();
         try {
-
-            s = uploadService.putObject(multipartFile);
+            stringStringMap = uploadService.putObject(multipartFile);
         } catch (Exception e) {
             e.printStackTrace();
         }
-        return R.ok().put("data", s);
+        return R.ok().put("data", stringStringMap);
     }
 
 

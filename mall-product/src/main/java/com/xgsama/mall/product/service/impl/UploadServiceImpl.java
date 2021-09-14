@@ -3,6 +3,7 @@ package com.xgsama.mall.product.service.impl;
 import com.xgsama.mall.product.service.UploadService;
 import io.minio.MinioClient;
 import io.minio.PutObjectArgs;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -10,9 +11,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import javax.annotation.Resource;
 import java.time.LocalDate;
-import java.util.LinkedList;
-import java.util.List;
-import java.util.UUID;
+import java.util.*;
 
 /**
  * UploadServiceImpl
@@ -21,6 +20,7 @@ import java.util.UUID;
  * @date : 2021/9/12 19:26:13
  */
 @Service("uploadService")
+@Slf4j
 public class UploadServiceImpl implements UploadService {
 
     @Resource(name = "minioClient")
@@ -38,16 +38,17 @@ public class UploadServiceImpl implements UploadService {
     public static final String URI_DELIMITER = "/";
 
     @Override
-    public String putObject(@RequestParam("multipartFile") MultipartFile multipartFile) throws Exception {
+    public Map<String, String> putObject(@RequestParam("multipartFile") MultipartFile multipartFile) throws Exception {
         return putObject(new MultipartFile[]{multipartFile}).get(0);
     }
 
     @Override
-    public List<String> putObject(MultipartFile... multipartFiles) throws Exception {
-        List<String> retVal = new LinkedList<>();
+    public List<Map<String, String>> putObject(MultipartFile... multipartFiles) throws Exception {
+        List<Map<String, String>> retVal = new ArrayList<>();
         String[] folders = getDateFolder();
 
         for (MultipartFile multipartFile : multipartFiles) {
+            Map<String, String> res = new HashMap<>();
             String fileName = UUID.randomUUID().toString().replace("-", "") + "." + getSuffix(multipartFile.getOriginalFilename());
 
             // 年/月/日/file
@@ -55,17 +56,19 @@ public class UploadServiceImpl implements UploadService {
                     URI_DELIMITER +
                     fileName;
 
-            System.out.println(multipartFile.getContentType());
-
             minioClient.putObject(PutObjectArgs.builder()
-                    .stream(multipartFile.getInputStream(), -1, PutObjectArgs.MAX_PART_SIZE)
+                    .stream(multipartFile.getInputStream(), multipartFile.getSize(), -1)
                     .object(finalPath)
-//                    .contentType(multipartFile.getContentType())
+                    .contentType(multipartFile.getContentType())
                     .bucket(bucket)
                     .build());
 
-            retVal.add(gateway(finalPath));
+            res.put("name", fileName);
+            res.put("url", gateway(finalPath));
 
+            log.info("上传图片", res);
+
+            retVal.add(res);
         }
 
         return retVal;

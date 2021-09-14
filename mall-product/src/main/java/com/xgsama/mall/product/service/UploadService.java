@@ -3,6 +3,7 @@ package com.xgsama.mall.product.service;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
+import java.util.Map;
 
 /**
  * UploadService
@@ -12,7 +13,7 @@ import java.util.List;
  */
 public interface UploadService {
 
-    String putObject(MultipartFile multipartFile) throws Exception;
+    Map<String, String> putObject(MultipartFile multipartFile) throws Exception;
 
-    List<String> putObject(MultipartFile... multipartFiles) throws Exception;
+    List<Map<String, String>> putObject(MultipartFile... multipartFiles) throws Exception;
 }

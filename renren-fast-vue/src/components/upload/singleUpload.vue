@@ -1,8 +1,7 @@
 <template>
   <div>
     <el-upload
-      action="http://"
-      :data="dataObj"
+      action="http://localhost:88/api/product/upload/one"
       list-type="picture"
       :multiple="false"
       :show-file-list="showFileList"
@@ -21,9 +20,6 @@
   </div>
 </template>
 <script>
-import {policy} from "./policy";
-import {getUUID} from "@/utils";
-
 export default {
   name: "singleUpload",
   props: {
@@ -83,33 +79,15 @@ export default {
       this.dialogVisible = true;
     },
     beforeUpload(file) {
-      let _self = this;
-      return new Promise((resolve, reject) => {
-        policy()
-          .then(response => {
-            _self.dataObj.policy = response.data.policy;
-            _self.dataObj.signature = response.data.signature;
-            _self.dataObj.ossaccessKeyId = response.data.accessid;
-            _self.dataObj.key = response.data.dir + getUUID() + "_${filename}";
-            _self.dataObj.dir = response.data.dir;
-            _self.dataObj.host = response.data.host;
-            // console.log("响应的数据", _self.dataObj);
-            resolve(true);
-          })
-          .catch(err => {
-            reject(false);
-          });
-      });
     },
     handleUploadSuccess(res, file) {
+      console.log("res", res)
+      console.log("file", file)
       this.showFileList = true;
       this.fileList.pop();
       this.fileList.push({
-        name: file.name,
-        url:
-          this.dataObj.host +
-          "/" +
-          this.dataObj.key.replace("${filename}", file.name)
+        name: res.data.name,
+        url: res.data.url
       });
       this.emitInput(this.fileList[0].url);
     }

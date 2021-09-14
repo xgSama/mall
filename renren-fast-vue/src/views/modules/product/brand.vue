@@ -41,6 +41,11 @@
         header-align="center"
         align="center"
         label="品牌logo地址">
+        <template slot-scope="scope">
+          <!-- 自定义表格+自定义图片 -->
+          <img :src="scope.row.logo" style="width: 100px; height: 80px" />
+<!--          <el-image :src="scope.row.logo" style="width: 100px; height: 80px" fit="fill"/>-->
+        </template>
       </el-table-column>
       <el-table-column
         prop="descript"
