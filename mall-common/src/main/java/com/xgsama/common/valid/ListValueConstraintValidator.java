@@ -12,14 +12,14 @@ import java.util.Set;
  * @date : 2021/9/14 22:37:12
  */
 
-/**
+/*
  * public interface ConstraintValidator<A extends Annotation, T>
  * 类型参数：
  * <A> – 实现处理的注解类型
  * <T> – 实现支持的目标类型
  */
 public class ListValueConstraintValidator implements ConstraintValidator<ListValue, Integer> {
-    private Set<Integer> set = new HashSet<>();
+    private final Set<Integer> set = new HashSet<>();
 
     @Override
     public void initialize(ListValue constraintAnnotation) {

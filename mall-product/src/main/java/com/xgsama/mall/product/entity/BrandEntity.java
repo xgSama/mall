@@ -33,7 +33,7 @@ public class BrandEntity implements Serializable {
     /**
      * 品牌名
      */
-    @NotBlank(message = "品牌名必须提交", groups = {UpdateGroup.class, AddGroup.class})
+    @NotBlank(message = "品牌名必须提交", groups = {AddGroup.class})
     private String name;
     /**
      * 品牌logo地址
