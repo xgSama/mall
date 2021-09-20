@@ -5,6 +5,8 @@ import com.xgsama.mall.product.dao.BrandDao;
 import com.xgsama.mall.product.dao.CategoryDao;
 import com.xgsama.mall.product.entity.BrandEntity;
 import com.xgsama.mall.product.entity.CategoryEntity;
+import com.xgsama.mall.product.service.BrandService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -32,6 +34,12 @@ public class CategoryBrandRelationServiceImpl extends ServiceImpl<CategoryBrandR
 
     @Resource
     private CategoryDao categoryDao;
+
+    @Autowired
+    private CategoryBrandRelationDao relationDao;
+
+    @Autowired
+    private BrandService brandService;
 
     @Override
     public PageUtils queryPage(Map<String, Object> params) {
@@ -62,11 +70,15 @@ public class CategoryBrandRelationServiceImpl extends ServiceImpl<CategoryBrandR
 
     @Override
     public List<BrandEntity> getBrandByCatlogId(Long catId) {
-        List<CategoryBrandRelationEntity> brandRelationEntityList = baseMapper.selectList(new QueryWrapper<CategoryBrandRelationEntity>()
-                .eq("catelog_id", catId));
-        List<Long> brandIds = brandRelationEntityList.stream().map(item -> item.getBrandId()).collect(Collectors.toList());
-        List<BrandEntity> brandEntityList = brandDao.selectBatchIds(brandIds);
-        return brandEntityList;
+        List<CategoryBrandRelationEntity> catelogId = relationDao.selectList(new QueryWrapper<CategoryBrandRelationEntity>().eq("catelog_id", catId));
+        List<BrandEntity> collect = catelogId.stream()
+                .map(item -> {
+                    Long brandId = item.getBrandId();
+                    return brandService.getById(brandId);
+                })
+                .collect(Collectors.toList());
+
+        return collect;
     }
 
     @Override

@@ -73,12 +73,21 @@ public class CategoryServiceImpl extends ServiceImpl<CategoryDao, CategoryEntity
 
     /**
      * 级联更新
+     *
      * @param category
      */
     @Override
     public void updateCascade(CategoryEntity category) {
         this.updateById(category);
         categoryBrandRelationService.updateCategory(category.getCatId(), category.getName());
+    }
+
+    @Override
+    public Long[] findCategoryPath(Long catelogId) {
+        List<Long> path = new ArrayList<>();
+        List<Long> parentPath = findParentPath(catelogId, path);
+        Collections.reverse(parentPath);
+        return parentPath.toArray(new Long[0]);
     }
 
     private List<Long> findParentPath(Long catelogId, List<Long> paths) {

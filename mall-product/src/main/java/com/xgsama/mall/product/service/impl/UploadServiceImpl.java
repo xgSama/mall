@@ -66,7 +66,7 @@ public class UploadServiceImpl implements UploadService {
             res.put("name", fileName);
             res.put("url", gateway(finalPath));
 
-            log.info("上传图片", res);
+            log.info("上传图片成功，图片地址：" + gateway(finalPath));
 
             retVal.add(res);
         }

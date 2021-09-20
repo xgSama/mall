@@ -3,8 +3,10 @@ package com.xgsama.mall.product.controller;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 import com.xgsama.mall.product.entity.BrandEntity;
+import com.xgsama.mall.product.vo.BrandVo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -51,9 +53,15 @@ public class CategoryBrandRelationController {
      * 获取catId下的品牌
      */
     @GetMapping("/brands/list")
-    public R getBrandByCatId(@RequestParam Long catId) {
+    public R getBrandByCatId(@RequestParam(value = "catId", required = true) Long catId) {
         List<BrandEntity> list = categoryBrandRelationService.getBrandByCatlogId(catId);
-        return R.ok().put("data", list);
+        List<BrandVo> collect = list.stream().map(item -> {
+            BrandVo brandVo = new BrandVo();
+            brandVo.setBrandId(item.getBrandId());
+            brandVo.setBrandName(item.getName());
+            return brandVo;
+        }).collect(Collectors.toList());
+        return R.ok().put("data", collect);
     }
 
 

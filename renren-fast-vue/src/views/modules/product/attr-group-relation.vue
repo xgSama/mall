@@ -87,7 +87,6 @@
 </template>
 
 <script>
-import AddOrUpdate from './attrattrgrouprelation-add-or-update'
 
 export default {
   data() {
@@ -109,7 +108,7 @@ export default {
     }
   },
   components: {
-    AddOrUpdate
+
   },
   activated() {
     this.getDataList()
@@ -119,7 +118,7 @@ export default {
     getDataList() {
       this.dataListLoading = true
       this.$http({
-        url: this.$http.adornUrl('/product/attrattrgrouprelation/list'),
+        url: this.$http.adornUrl("/product/attrgroup/" + this.attrGroupId + "/noattr/relation"),
         method: 'get',
         params: this.$http.adornParams({
           'page': this.pageIndex,
