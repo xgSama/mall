@@ -61,7 +61,7 @@
           </el-form>
         </el-card>
       </el-col>
-      <el-col :span="24" v-show="step==1">
+      <el-col :span="24" v-show="step===1">
         <el-card class="box-card" style="width:80%;margin:20px auto">
           <el-tabs tab-position="left" style="width:98%">
             <el-tab-pane
@@ -112,7 +112,7 @@
           </div>
         </el-card>
       </el-col>
-      <el-col :span="24" v-show="step==2">
+      <el-col :span="24" v-show="step===2">
         <el-card class="box-card" style="width:80%;margin:20px auto">
           <el-card class="box-card">
             <div slot="header" class="clearfix">
@@ -162,7 +162,7 @@
           </el-card>
         </el-card>
       </el-col>
-      <el-col :span="24" v-show="step==3">
+      <el-col :span="24" v-show="step===3">
         <el-card class="box-card" style="width:80%;margin:20px auto">
           <el-table :data="spu.skus" style="width: 100%">
             <el-table-column label="属性组合">
@@ -337,7 +337,7 @@
           <el-button type="success" @click="submitSkus">下一步：保存商品信息</el-button>
         </el-card>
       </el-col>
-      <el-col :span="24" v-show="step==4">
+      <el-col :span="24" v-show="step===4">
         <el-card class="box-card" style="width:80%;margin:20px auto">
           <h1>保存成功</h1>
           <el-button type="primary" @click="addAgian">继续添加</el-button>
@@ -374,7 +374,7 @@ export default {
         publishStatus: 0,
         decript: [], //商品详情
         images: [
-          {imgUrl: ""}
+          // {imgUrl: null}
         ], //商品图集，最后sku也可以新增
         bounds: {
           //积分
@@ -542,7 +542,7 @@ export default {
           // console.log("笛卡尔生成组合：" , attr);
           let {attrId, attrValues, showDesc} = attr;
           //跳过没有录入值的属性
-          if (attrValues != "") {
+          if (attrValues !== "") {
             if (attrValues instanceof Array) {
               //多个值用;隔开
               attrValues = attrValues.join(";");
