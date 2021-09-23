@@ -152,7 +152,16 @@ public class AttrGroupController {
     @RequestMapping("/delete")
     // @RequiresPermissions("product:attrgroup:delete")
     public R delete(@RequestBody Long[] attrGroupIds) {
-        attrGroupService.removeByIds(Arrays.asList(attrGroupIds));
+
+        // 删除前判断是否有关联
+        for (Long attrGroupId : attrGroupIds) {
+            List<AttrEntity> relationAttr = attrService.getRelationAttr(attrGroupId);
+
+            if (relationAttr == null || relationAttr.size() == 0) {
+                attrGroupService.removeById(attrGroupId);
+            }
+        }
+//        attrGroupService.removeByIds(Arrays.asList(attrGroupIds));
 
         return R.ok();
     }

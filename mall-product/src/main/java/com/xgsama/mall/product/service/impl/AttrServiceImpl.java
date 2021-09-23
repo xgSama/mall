@@ -93,25 +93,34 @@ public class AttrServiceImpl extends ServiceImpl<AttrDao, AttrEntity> implements
         // 先查询三级分类名字、分组名字 再封装
         List<AttrEntity> records = page.getRecords();
         // attrRespVos 就是最终封装好的Vo
-        List<AttrRespVo> attrRespVos = records.stream().map((attrEntity) -> {
-            AttrRespVo attrRespVo = new AttrRespVo();
-            BeanUtils.copyProperties(attrEntity, attrRespVo);
-            // 1.设置分类和分组的名字  先获取中间表对象  给attrRespVo 封装分组名字
-            if ("base".equalsIgnoreCase(type)) {
-                // attr的关联关系 当它没有分组的时候就不保存了
-                AttrAttrgroupRelationEntity entity = relationDao.selectOne(new QueryWrapper<AttrAttrgroupRelationEntity>().eq("attr_id", attrEntity.getAttrId()));
-                if (entity != null && entity.getAttrGroupId() != null) {
-                    AttrGroupEntity attrGroupEntity = attrGroupDao.selectById(entity);
-                    attrRespVo.setGroupName(attrGroupEntity.getAttrGroupName());
-                }
-            }
-            // 2.查询分类id 给attrRespVo 封装三级分类名字
-            CategoryEntity categoryEntity = categoryDao.selectById(attrEntity.getCatelogId());
-            if (categoryEntity != null) {
-                attrRespVo.setCatelogName(categoryEntity.getName());
-            }
-            return attrRespVo;
-        }).collect(Collectors.toList());
+        List<AttrRespVo> attrRespVos = records.stream()
+                .map((attrEntity) -> {
+                    AttrRespVo attrRespVo = new AttrRespVo();
+                    BeanUtils.copyProperties(attrEntity, attrRespVo);
+                    // 1.设置分类和分组的名字  先获取中间表对象  给attrRespVo 封装分组名字
+                    if ("base".equalsIgnoreCase(type)) {
+                        // attr的关联关系 当它没有分组的时候就不保存了
+                        AttrAttrgroupRelationEntity entity = relationDao.selectOne(
+                                new QueryWrapper<AttrAttrgroupRelationEntity>().eq("attr_id", attrEntity.getAttrId()));
+                        if (entity != null && entity.getAttrGroupId() != null) {
+                            AttrGroupEntity attrGroupEntity = attrGroupDao.selectById(entity);
+
+//                            attrRespVo.setGroupName(attrGroupEntity.getAttrGroupName());
+
+                            if (attrGroupEntity != null) {
+                                attrRespVo.setGroupName(attrGroupEntity.getAttrGroupName());
+                            } else {
+                                // TODO 此处有BUG，之前分组删除未做限制可能关联的分组已经被误删
+                            }
+                        }
+                    }
+                    // 2.查询分类id 给attrRespVo 封装三级分类名字
+                    CategoryEntity categoryEntity = categoryDao.selectById(attrEntity.getCatelogId());
+                    if (categoryEntity != null) {
+                        attrRespVo.setCatelogName(categoryEntity.getName());
+                    }
+                    return attrRespVo;
+                }).collect(Collectors.toList());
         pageUtils.setList(attrRespVos);
         return pageUtils;
     }
