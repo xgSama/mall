@@ -1,23 +1,20 @@
 package com.xgsama.mall.product.controller;
 
-import java.util.Arrays;
-import java.util.List;
-import java.util.Map;
-
+import com.xgsama.common.utils.PageUtils;
+import com.xgsama.common.utils.R;
 import com.xgsama.mall.product.entity.AttrEntity;
+import com.xgsama.mall.product.entity.AttrGroupEntity;
 import com.xgsama.mall.product.service.AttrAttrgroupRelationService;
+import com.xgsama.mall.product.service.AttrGroupService;
 import com.xgsama.mall.product.service.AttrService;
 import com.xgsama.mall.product.service.CategoryService;
-import com.xgsama.mall.product.vo.AttrGroupAndAttrVo;
 import com.xgsama.mall.product.vo.AttrGroupRelationVo;
 import com.xgsama.mall.product.vo.AttrGroupWithAttrsVo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
-import com.xgsama.mall.product.entity.AttrGroupEntity;
-import com.xgsama.mall.product.service.AttrGroupService;
-import com.xgsama.common.utils.PageUtils;
-import com.xgsama.common.utils.R;
+import java.util.List;
+import java.util.Map;
 
 
 /**
@@ -153,7 +150,7 @@ public class AttrGroupController {
     // @RequiresPermissions("product:attrgroup:delete")
     public R delete(@RequestBody Long[] attrGroupIds) {
 
-        // 删除前判断是否有关联
+        // TODO 删除前判断是否有关联
         for (Long attrGroupId : attrGroupIds) {
             List<AttrEntity> relationAttr = attrService.getRelationAttr(attrGroupId);
 

@@ -1,16 +1,24 @@
 package com.xgsama.mall.product.service.impl;
 
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.baomidou.mybatisplus.core.metadata.IPage;
+import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.xgsama.common.to.SkuReductionTO;
 import com.xgsama.common.to.SpuBoundTO;
+import com.xgsama.common.utils.PageUtils;
+import com.xgsama.common.utils.Query;
 import com.xgsama.common.utils.R;
+import com.xgsama.mall.product.dao.SpuInfoDao;
 import com.xgsama.mall.product.entity.*;
 import com.xgsama.mall.product.feign.CouponFeignService;
 import com.xgsama.mall.product.service.*;
 import com.xgsama.mall.product.vo.*;
+import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.math.BigDecimal;
 import java.util.Date;
@@ -18,17 +26,9 @@ import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
-import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
-import com.baomidou.mybatisplus.core.metadata.IPage;
-import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
-import com.xgsama.common.utils.PageUtils;
-import com.xgsama.common.utils.Query;
-
-import com.xgsama.mall.product.dao.SpuInfoDao;
-import org.springframework.transaction.annotation.Transactional;
-
 
 @Service("spuInfoService")
+@Slf4j
 public class SpuInfoServiceImpl extends ServiceImpl<SpuInfoDao, SpuInfoEntity> implements SpuInfoService {
 
     @Autowired
@@ -198,7 +198,34 @@ public class SpuInfoServiceImpl extends ServiceImpl<SpuInfoDao, SpuInfoEntity> i
 
     @Override
     public PageUtils queryPageByCondition(Map<String, Object> params) {
-        return null;
+        QueryWrapper<SpuInfoEntity> wrapper = new QueryWrapper<>();
+
+        // 根据 spu管理带来的条件进行叠加模糊查询
+        String key = (String) params.get("key");
+        if (!StringUtils.isEmpty(key)) {
+            wrapper.and(w -> w.eq("id", key).or().like("spu_name", key));
+        }
+
+        String status = (String) params.get("status");
+        if (!StringUtils.isEmpty(status)) {
+            wrapper.eq("publish_status", status);
+        }
+
+        String brandId = (String) params.get("brandId");
+        if (!StringUtils.isEmpty(brandId) && !"0".equalsIgnoreCase(brandId)) {
+            wrapper.eq("brand_id", brandId);
+        }
+
+        String catelogId = (String) params.get("catelogId");
+        if (!StringUtils.isEmpty(catelogId) && !"0".equalsIgnoreCase(catelogId)) {
+            wrapper.eq("catalog_id", catelogId);
+        }
+
+        IPage<SpuInfoEntity> page = this.page(
+                new Query<SpuInfoEntity>().getPage(params),
+                wrapper
+        );
+        return new PageUtils(page);
     }
 
     @Override
