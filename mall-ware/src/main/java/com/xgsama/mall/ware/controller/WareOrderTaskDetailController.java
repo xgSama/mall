@@ -36,6 +36,7 @@ public class WareOrderTaskDetailController {
     @RequestMapping("/list")
     // @RequiresPermissions("ware:wareordertaskdetail:list")
     public R list(@RequestParam Map<String, Object> params){
+
         PageUtils page = wareOrderTaskDetailService.queryPage(params);
 
         return R.ok().put("page", page);

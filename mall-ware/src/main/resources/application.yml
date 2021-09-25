@@ -2,11 +2,19 @@ server:
   port: 10000
 
 spring:
+  application:
+    name: mall-ware
   datasource:
     username: root
     password: cyz19980815
-    url: jdbc:mysql://xgsama:3307/mall_pms?useUnicode=true&characterEncoding=UTF-8&useSSL=false&serverTimezone=Asia/Shanghai
+    url: jdbc:mysql://xgsama:3307/mall_wms?useUnicode=true&characterEncoding=UTF-8&useSSL=false&serverTimezone=Asia/Shanghai
     driver-class-name: com.mysql.jdbc.Driver
+  cloud:
+    nacos:
+      discovery:
+        server-addr: nacos:8848
+  jackson:
+    date-format: yyyy-MM-dd HH:mm:ss
 
 
 mybatis-plus:
@@ -14,3 +22,8 @@ mybatis-plus:
   global-config:
     db-config:
       id-type: auto
+
+
+logging:
+  level:
+    com.xgsama: debug
