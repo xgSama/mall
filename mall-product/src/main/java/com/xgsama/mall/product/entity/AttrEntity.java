@@ -41,6 +41,10 @@ public class AttrEntity implements Serializable {
 	 */
 	private String valueSelect;
 	/**
+	 * 是否多选[0-否，1-是]
+	 */
+	private Integer valueType;
+	/**
 	 * 属性类型[0-销售属性，1-基本属性
 	 */
 	private Integer attrType;

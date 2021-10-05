@@ -3,6 +3,7 @@ package com.xgsama.mall.ware;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
+import org.springframework.cloud.openfeign.EnableFeignClients;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
 
 /**
@@ -11,6 +12,7 @@ import org.springframework.transaction.annotation.EnableTransactionManagement;
  * @author : xgSama
  * @date : 2021/9/8 22:39:59
  */
+@EnableFeignClients
 @EnableTransactionManagement
 @EnableDiscoveryClient
 @SpringBootApplication

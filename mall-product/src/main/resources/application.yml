@@ -16,6 +16,10 @@ spring:
 
   jackson:
     date-format: yyyy-MM-dd HH:mm:ss
+  thymeleaf:
+    cache: false
+    suffix: .html
+    prefix: classpath:/templates/
 
 
 mybatis-plus:

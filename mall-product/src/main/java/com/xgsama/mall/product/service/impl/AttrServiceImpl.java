@@ -5,9 +5,7 @@ import com.xgsama.common.constant.ProductConstant;
 import com.xgsama.mall.product.dao.AttrAttrgroupRelationDao;
 import com.xgsama.mall.product.dao.AttrGroupDao;
 import com.xgsama.mall.product.dao.CategoryDao;
-import com.xgsama.mall.product.entity.AttrAttrgroupRelationEntity;
-import com.xgsama.mall.product.entity.AttrGroupEntity;
-import com.xgsama.mall.product.entity.CategoryEntity;
+import com.xgsama.mall.product.entity.*;
 import com.xgsama.mall.product.service.CategoryService;
 import com.xgsama.mall.product.vo.AttrGroupRelationVo;
 import com.xgsama.mall.product.vo.AttrRespVo;
@@ -29,7 +27,6 @@ import com.xgsama.common.utils.PageUtils;
 import com.xgsama.common.utils.Query;
 
 import com.xgsama.mall.product.dao.AttrDao;
-import com.xgsama.mall.product.entity.AttrEntity;
 import com.xgsama.mall.product.service.AttrService;
 import org.springframework.transaction.annotation.Transactional;
 

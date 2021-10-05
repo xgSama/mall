@@ -83,7 +83,7 @@
                   ></el-input>
                   <el-select
                     v-model="dataResp.baseAttrs[gidx][aidx].attrValues"
-                    :multiple="attr.valueType == 1"
+                    :multiple="attr.valueType === 1"
                     filterable
                     allow-create
                     default-first-option
@@ -112,6 +112,7 @@
           </div>
         </el-card>
       </el-col>
+
       <el-col :span="24" v-show="step===2">
         <el-card class="box-card" style="width:80%;margin:20px auto">
           <el-card class="box-card">
@@ -130,7 +131,7 @@
                   ></el-input>
                   <el-checkbox-group v-model="dataResp.tempSaleAttrs[aidx].attrValues">
                     <el-checkbox
-                      v-if="dataResp.saleAttrs[aidx].valueSelect != ''"
+                      v-if="dataResp.saleAttrs[aidx].valueSelect !== ''"
                       :label="val"
                       v-for="val in dataResp.saleAttrs[aidx].valueSelect.split(';')"
                       :key="val"
