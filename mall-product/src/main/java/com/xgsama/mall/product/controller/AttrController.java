@@ -33,6 +33,11 @@ public class AttrController {
     @Autowired
     ProductAttrValueService productAttrValueService;
 
+    @GetMapping("test")
+    public String test() {
+        return "Hello";
+    }
+
     /**
      * 获取spu规格
      *

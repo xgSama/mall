@@ -1,22 +1,21 @@
 package com.xgsama.mall.product.service.impl;
 
-import com.xgsama.mall.product.service.CategoryBrandRelationService;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
-
-import java.time.Period;
-import java.util.*;
-import java.util.stream.Collectors;
-
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.xgsama.common.utils.PageUtils;
 import com.xgsama.common.utils.Query;
-
 import com.xgsama.mall.product.dao.CategoryDao;
 import com.xgsama.mall.product.entity.CategoryEntity;
+import com.xgsama.mall.product.service.CategoryBrandRelationService;
 import com.xgsama.mall.product.service.CategoryService;
+import com.xgsama.mall.product.vo.Catalog2Vo;
+import com.xgsama.mall.product.vo.Catalog3Vo;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import java.util.*;
+import java.util.stream.Collectors;
 
 
 @Service("categoryService")
@@ -88,6 +87,51 @@ public class CategoryServiceImpl extends ServiceImpl<CategoryDao, CategoryEntity
         List<Long> parentPath = findParentPath(catelogId, path);
         Collections.reverse(parentPath);
         return parentPath.toArray(new Long[0]);
+    }
+
+    @Override
+    public List<CategoryEntity> getLevel1Categories() {
+        List<CategoryEntity> entities = baseMapper.selectList(new QueryWrapper<CategoryEntity>().eq("parent_cid", 0));
+        return entities;
+    }
+
+    @Override
+    public Map<String, List<Catalog2Vo>> getCatalogJson() {
+        // 1、查出所有一级分类
+        List<CategoryEntity> level1Categories = getLevel1Categories();
+
+        // 2、封装数据
+        Map<String, List<Catalog2Vo>> parent_cid = level1Categories.stream().collect(Collectors.toMap(
+                k -> k.getCatId().toString(),
+                v -> {
+                    List<CategoryEntity> entities = baseMapper.selectList(new QueryWrapper<CategoryEntity>().eq("parent_cid", v.getCatId()));
+                    List<Catalog2Vo> catalog2Vos = null;
+                    if (entities != null) {
+                        catalog2Vos = entities.stream().map(l2 -> {
+                            Catalog2Vo catalog2Vo = new Catalog2Vo(l2.getCatId().toString(),
+                                    l2.getName(),
+                                    v.getCatId().toString(),
+                                    null);
+
+                            List<CategoryEntity> level3Catalog = baseMapper.selectList(new QueryWrapper<CategoryEntity>()
+                                    .eq("parent_cid", l2.getCatId()));
+                            if (level3Catalog != null) {
+                                List<Catalog3Vo> collect = level3Catalog.stream()
+                                        .map(l3 -> {
+                                            Catalog3Vo catalog3Vo = new Catalog3Vo(l3.getCatId().toString(), l3.getName(),
+                                                    l2.getCatId().toString());
+                                            return catalog3Vo;
+                                        }).collect(Collectors.toList());
+                                catalog2Vo.setCatalog3List(collect);
+                            }
+
+                            return catalog2Vo;
+                        }).collect(Collectors.toList());
+                    }
+                    return catalog2Vos;
+                }));
+
+        return parent_cid;
     }
 
     private List<Long> findParentPath(Long catelogId, List<Long> paths) {

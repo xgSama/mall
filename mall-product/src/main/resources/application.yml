@@ -20,6 +20,8 @@ spring:
     cache: false
     suffix: .html
     prefix: classpath:/templates/
+  mvc:
+    static-path-pattern: /static/**
 
 
 mybatis-plus:

@@ -47,3 +47,9 @@ spring:
           filters:
             - RewritePath=/api/(?<segment>.*), /renren-fast/$\{segment}
 
+        # 任何以mall.com结尾的域名转发到mall-product
+        - id: mall_route
+          uri: lb://mall-product
+          predicates:
+            - Host=**.mall.com,mall.com,item.mall.com
+
