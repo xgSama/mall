@@ -9,6 +9,7 @@
         <outputRelativeToContentRoot value="true" />
         <module name="mall-coupon" />
         <module name="mall-ware" />
+        <module name="mall-search" />
         <module name="renren-fast" />
         <module name="mall-order" />
         <module name="mall-common" />

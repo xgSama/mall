@@ -1,5 +1,6 @@
 package com.xgsama.mall.ware.service.impl;
 
+import com.xgsama.common.to.es.SkuHasStockVo;
 import com.xgsama.common.utils.R;
 import com.xgsama.mall.ware.feign.ProductFeignService;
 import org.apache.commons.lang3.StringUtils;
@@ -8,6 +9,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
@@ -90,6 +92,24 @@ public class WareSkuServiceImpl extends ServiceImpl<WareSkuDao, WareSkuEntity> i
             wareSkuDao.addStock(skuId, wareId, skuNum);
         }
         return price;
+    }
+
+    /**
+     * 这里存过库存数量
+     * SELECT SUM(stock - stock_locked) FROM `wms_ware_sku` WHERE sku_id = 1
+     */
+    @Override
+    public List<SkuHasStockVo> getSkuHasStock(List<Long> skuIds) {
+        return skuIds.stream().map(id -> {
+            SkuHasStockVo stockVo = new SkuHasStockVo();
+
+            // 查询当前sku的总库存量
+            stockVo.setSkuId(id);
+            // 这里库存可能为null 要避免空指针异常
+            Long skuStock = baseMapper.getSkuStock(id);
+            stockVo.setHasStock(skuStock != null && skuStock > 0);
+            return stockVo;
+        }).collect(Collectors.toList());
     }
 
 }

@@ -1,0 +1,20 @@
+server:
+  port: 13000
+
+spring:
+  application:
+    name: mall-search
+  cloud:
+    nacos:
+      discovery:
+        server-addr: nacos:8848
+
+
+  jackson:
+    date-format: yyyy-MM-dd HH:mm:ss
+    time-zone: GMT+8
+
+
+logging:
+  level:
+    com.xgsama.mall.product: debug

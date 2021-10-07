@@ -229,6 +229,14 @@ public class AttrServiceImpl extends ServiceImpl<AttrDao, AttrEntity> implements
     }
 
     /**
+     * SELECT attr_id FROM `pms_attr` WHERE attr_id IN (?) AND search_type = 1
+     */
+    @Override
+    public List<Long> selectSearchAttrs(List<Long> attrIds) {
+        return baseMapper.selectSearchAttrIds(attrIds);
+    }
+
+    /**
      * 根据attrId和attrGroupId删除关联
      *
      * @param attrGroupRelationVo

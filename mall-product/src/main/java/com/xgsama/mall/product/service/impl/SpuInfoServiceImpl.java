@@ -1,16 +1,22 @@
 package com.xgsama.mall.product.service.impl;
 
+import com.alibaba.fastjson.TypeReference;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import com.xgsama.common.constant.ProductConstant;
 import com.xgsama.common.to.SkuReductionTO;
 import com.xgsama.common.to.SpuBoundTO;
+import com.xgsama.common.to.es.SkuEsModel;
+import com.xgsama.common.to.es.SkuHasStockVo;
 import com.xgsama.common.utils.PageUtils;
 import com.xgsama.common.utils.Query;
 import com.xgsama.common.utils.R;
 import com.xgsama.mall.product.dao.SpuInfoDao;
 import com.xgsama.mall.product.entity.*;
 import com.xgsama.mall.product.feign.CouponFeignService;
+import com.xgsama.mall.product.feign.SearchFeignService;
+import com.xgsama.mall.product.feign.WareFeignService;
 import com.xgsama.mall.product.service.*;
 import com.xgsama.mall.product.vo.*;
 import lombok.extern.slf4j.Slf4j;
@@ -21,9 +27,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.math.BigDecimal;
-import java.util.Date;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 import java.util.stream.Collectors;
 
 
@@ -54,6 +58,12 @@ public class SpuInfoServiceImpl extends ServiceImpl<SpuInfoDao, SpuInfoEntity> i
 
     @Autowired
     private CouponFeignService couponFeignService;
+
+    @Autowired
+    private WareFeignService wareFeignService;
+
+    @Autowired
+    SearchFeignService esFeignClient;
 
     @Autowired
     private BrandService brandService;
@@ -231,6 +241,110 @@ public class SpuInfoServiceImpl extends ServiceImpl<SpuInfoDao, SpuInfoEntity> i
     @Override
     public void up(Long spuId) {
 
+        // 1、查出当前 spu 对应的所有sku信息，品牌的名字
+        List<SkuInfoEntity> skus = skuInfoService.getSkusBySpuId(spuId);
+
+
+        //TODO 4、查询当前 sku 的所有可以用来被检索的规格属性
+        List<ProductAttrValueEntity> attrValueEntities = attrValueService.baseAttrListForSpu(spuId);
+        // 返回所有 attrId
+        List<Long> attrIds = attrValueEntities.stream().map(ProductAttrValueEntity::getAttrId).collect(Collectors.toList());
+
+        // 根据 attrIds 查询出 检索属性，pms_attr表中 search_type为一 则是检索属性
+        List<Long> searchAttrIds = attrService.selectSearchAttrs(attrIds);
+
+        // 将查询出来的 attr_id 放到 set 集合中 用来判断 attrValueEntities 是否包含 attrId
+        Set<Long> idSet = new HashSet<>(searchAttrIds);
+
+        List<SkuEsModel.Attrs> attrList = attrValueEntities.stream()
+                .filter(item -> {
+                    // 过滤掉不包含在 searchAttrIds集合中的元素
+                    return idSet.contains(item.getAttrId());
+                }).map(item -> {
+                    SkuEsModel.Attrs attrs1 = new SkuEsModel.Attrs();
+                    // 属性对拷 将 ProductAttrValueEntity对象与 SkuEsModel.Attrs相同的属性进行拷贝
+                    BeanUtils.copyProperties(item, attrs1);
+                    return attrs1;
+                }).collect(Collectors.toList());
+
+
+        // TODO 1、发送远程调用，库存系统查询是否有库存
+        // 取出 Skuid 组成集合
+        List<Long> skuIds = skus.stream().map(SkuInfoEntity::getSkuId).collect(Collectors.toList());
+        Map<Long, Boolean> stockMap = null;
+        try {
+            R r = wareFeignService.getSkuHasStock(skuIds);
+            // key 是 SkuHasStockVo的 skuid value是 item的hasStock 是否拥有库存
+            TypeReference<List<SkuHasStockVo>> typeReference = new TypeReference<List<SkuHasStockVo>>() {
+            };
+            stockMap = r.getData(typeReference).stream()
+                    .collect(Collectors.toMap(SkuHasStockVo::getSkuId, SkuHasStockVo::getHasStock));
+        } catch (Exception e) {
+            log.error("库存服务异常：原因：{}", e);
+            e.printStackTrace();
+        }
+
+        // 2、封装每个 sku 的信息
+        Map<Long, Boolean> finalStockMap = stockMap;
+        List<SkuEsModel> upProducts = skus.stream().map(sku -> {
+            // 组装需要查询的数据
+            SkuEsModel skuEsModel = new SkuEsModel();
+            BeanUtils.copyProperties(sku, skuEsModel);
+            skuEsModel.setSkuPrice(sku.getPrice());
+            skuEsModel.setSkuImg(sku.getSkuDefaultImg());
+
+            // 设置属性
+            skuEsModel.setAttrs(attrList);
+
+            // 设置库存信息
+            if (finalStockMap == null) {
+                // 远程服务出现问题，任然设置为null
+                skuEsModel.setHasStock(true);
+            } else {
+                skuEsModel.setHasStock(finalStockMap.get(sku.getSkuId()));
+            }
+            //TODO 2、热度频分 0
+            skuEsModel.setHotScore(0L);
+
+            //TODO 3、查询品牌名字和分类的信息
+            BrandEntity brandEntity = brandService.getById(skuEsModel.getBrandId());
+            skuEsModel.setBrandName(brandEntity.getName());
+            skuEsModel.setBrandImg(brandEntity.getLogo());
+            CategoryEntity categoryEntity = categoryService.getById(skuEsModel.getCatalogId());
+            skuEsModel.setCatalogName(categoryEntity.getName());
+
+            return skuEsModel;
+        }).collect(Collectors.toList());
+
+
+        //TODO 5、将数据发送给 es保存 ，直接发送给 search服务
+        R r = esFeignClient.productStatusUp(upProducts);
+        if (r.getCode() == 0) {
+            // 远程调用成功
+            // TODO 6、修改当前 spu 的状态
+            baseMapper.updateSpuStatus(spuId, ProductConstant.StatusEnum.SPU_UP.getCode());
+        } else {
+            // 远程调用失败
+            //TODO 7、重复调用？ 接口冥等性 重试机制
+
+            /**
+             * 1、构造请求数据，将对象转成json
+             * RequestTemplate template = buildTemplateFromArgs.create(argv);
+             * 2、发送请求进行执行(执行成功进行解码)
+             *  executeAndDecode(template);
+             * 3、执行请求会有重试机制
+             *  while (true) {
+             *       try {
+             *         return executeAndDecode(template);
+             *       } catch (RetryableException e) {
+             *         try {
+             *           retryer.continueOrPropagate(e);
+             *         } catch (RetryableException th) {
+             *              throw cause;
+             *         }
+             *         continute
+             */
+        }
     }
 
     @Override

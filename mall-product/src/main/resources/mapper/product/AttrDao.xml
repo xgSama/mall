@@ -1,9 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
+<!--suppress ALL -->
 <mapper namespace="com.xgsama.mall.product.dao.AttrDao">
 
-	<!-- 可根据自己的需求，是否要使用 -->
+    <!-- 可根据自己的需求，是否要使用 -->
     <resultMap type="com.xgsama.mall.product.entity.AttrEntity" id="attrMap">
         <result property="attrId" column="attr_id"/>
         <result property="attrName" column="attr_name"/>
@@ -15,6 +16,13 @@
         <result property="catelogId" column="catelog_id"/>
         <result property="showDesc" column="show_desc"/>
     </resultMap>
+
+    <select id="selectSearchAttrIds" resultType="java.lang.Long">
+        SELECT attr_id FROM `pms_attr` WHERE
+        search_type = 1 AND
+        attr_id IN
+        <foreach collection="attrIds" item="id" separator="," open="(" close=")">#{id}</foreach>
+    </select>
 
 
 </mapper>

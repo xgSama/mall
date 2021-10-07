@@ -20,5 +20,11 @@
           AND ware_id = #{wareId}
     </insert>
 
+    <!-- 查询是否有库存 -->
+    <select id="getSkuStock" resultType="java.lang.Long">
+        SELECT SUM(stock - stock_locked)
+        FROM `wms_ware_sku`
+        WHERE sku_id = #{id}
+    </select>
 
 </mapper>
