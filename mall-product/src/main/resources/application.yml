@@ -22,6 +22,10 @@ spring:
     prefix: classpath:/templates/
   mvc:
     static-path-pattern: /static/**
+  redis:
+    host: redis
+    port: 4396
+    database: 3
 
 
 mybatis-plus:

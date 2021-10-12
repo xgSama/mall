@@ -10,6 +10,7 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.test.context.junit4.SpringRunner;
 
 import java.util.Arrays;
@@ -20,12 +21,14 @@ import java.util.List;
 @SpringBootTest(classes = MallProductApplication.class)
 public class MallProductApplicationTests {
 
-
     @Autowired
     BrandService brandService;
 
     @Autowired
     CategoryService categoryService;
+
+    @Autowired
+    StringRedisTemplate stringRedisTemplate;
 
     @Test
     public void contextLoads() {
@@ -46,5 +49,12 @@ public class MallProductApplicationTests {
         log.info("完整路径：{}", Arrays.asList(catelogPath));
     }
 
+    @Test
+    public void contextRedisLoads() {
+
+        stringRedisTemplate.opsForValue().set("k1", "v1");
+
+        System.out.println(stringRedisTemplate.opsForValue().get("k1"));
+    }
 
 }
