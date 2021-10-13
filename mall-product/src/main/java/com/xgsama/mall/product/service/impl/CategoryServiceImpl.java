@@ -14,10 +14,17 @@ import com.xgsama.mall.product.service.CategoryService;
 import com.xgsama.mall.product.vo.Catalog2Vo;
 import com.xgsama.mall.product.vo.Catalog3Vo;
 import org.apache.commons.lang3.StringUtils;
+import org.redisson.api.RLock;
+import org.redisson.api.RedissonClient;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.CacheEvict;
+import org.springframework.cache.annotation.CachePut;
+import org.springframework.cache.annotation.Cacheable;
+import org.springframework.cache.annotation.Caching;
 import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.data.redis.core.script.DefaultRedisScript;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.*;
 import java.util.concurrent.TimeUnit;
@@ -32,6 +39,9 @@ public class CategoryServiceImpl extends ServiceImpl<CategoryDao, CategoryEntity
 
     @Autowired
     StringRedisTemplate redisTemplate;
+
+    @Autowired
+    RedissonClient redisson;
 
     @Override
     public PageUtils queryPage(Map<String, Object> params) {
@@ -84,6 +94,15 @@ public class CategoryServiceImpl extends ServiceImpl<CategoryDao, CategoryEntity
      *
      * @param category
      */
+//    @Caching(
+//            evict = {
+//                    @CacheEvict(value = "category", key = "'getLevel1Categories'"),
+//                    @CacheEvict(value = "category", key = "'getCatalogJson'")
+//            }
+//    )
+    @CacheEvict(value = {"category"}, allEntries = true)
+//    @CachePut
+    @Transactional
     @Override
     public void updateCascade(CategoryEntity category) {
         this.updateById(category);
@@ -98,6 +117,7 @@ public class CategoryServiceImpl extends ServiceImpl<CategoryDao, CategoryEntity
         return parentPath.toArray(new Long[0]);
     }
 
+    @Cacheable(value = {"category"}, key = "#root.method.name")
     @Override
     public List<CategoryEntity> getLevel1Categories() {
         List<CategoryEntity> entities = baseMapper.selectList(new QueryWrapper<CategoryEntity>().eq("parent_cid", 0));
@@ -105,6 +125,8 @@ public class CategoryServiceImpl extends ServiceImpl<CategoryDao, CategoryEntity
     }
 
     //    private Map<String, Object> cache = new HashMap<>();
+
+    @Cacheable(value = "category", key = "#root.methodName")
     @Override
     public Map<String, List<Catalog2Vo>> getCatalogJson() {
         /*
@@ -119,7 +141,7 @@ public class CategoryServiceImpl extends ServiceImpl<CategoryDao, CategoryEntity
             Map<String, List<Catalog2Vo>> catalogJsonFromDB = getCatalogJsonFromDBWithRedisLock();
             // 3. 查到的数据放入缓存，先转换成jsonString
             String catalogJsonString = JSON.toJSONString(catalogJsonFromDB);
-            redisTemplate.opsForValue().set("catalogJson", catalogJsonString, 1, TimeUnit.DAYS);
+            // redisTemplate.opsForValue().set("catalogJson", catalogJsonString, 1, TimeUnit.DAYS);
             return catalogJsonFromDB;
         }
         Map<String, List<Catalog2Vo>> result = JSON.parseObject(
@@ -180,7 +202,7 @@ public class CategoryServiceImpl extends ServiceImpl<CategoryDao, CategoryEntity
                 }));
 
         // 优化：查询到数据库就再锁还没结束之前放入缓存
-        redisTemplate.opsForValue().set("catalogJSON", JSON.toJSONString(parent_cid), 1, TimeUnit.DAYS);
+        redisTemplate.opsForValue().set("catalogJson", JSON.toJSONString(parent_cid), 1, TimeUnit.DAYS);
         return parent_cid;
     }
 
@@ -196,6 +218,9 @@ public class CategoryServiceImpl extends ServiceImpl<CategoryDao, CategoryEntity
 
     /**
      * 分布式锁
+     * 缓存里的数据如何与数据库保存一致
+     * 1、双写
+     * 2、失效模式
      *
      * @return
      */
@@ -217,6 +242,23 @@ public class CategoryServiceImpl extends ServiceImpl<CategoryDao, CategoryEntity
             // 加锁失败，重试逻辑
             return getCatalogJsonFromDBWithRedisLock(); // 自旋的获取锁
         }
+    }
+
+    public Map<String, List<Catalog2Vo>> getCatalogJsonFromDBWithRedissonLock() {
+        // 1、占分布式锁，去redis占坑
+
+        RLock lock = redisson.getLock("catalogJson-lock");
+        lock.lock();
+
+        Map<String, List<Catalog2Vo>> catalogJsonFromDB;
+        try {
+            catalogJsonFromDB = getDataFromDB();
+        } finally {
+            lock.unlock();
+        }
+
+        return catalogJsonFromDB;
+
     }
 
 
