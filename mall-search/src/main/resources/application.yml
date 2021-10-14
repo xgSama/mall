@@ -8,6 +8,10 @@ spring:
     nacos:
       discovery:
         server-addr: nacos:8848
+  thymeleaf:
+    cache: false
+    suffix: .html
+    prefix: classpath:/templates/
 
 
   jackson:
