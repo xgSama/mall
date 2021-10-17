@@ -93,8 +93,9 @@ public class AttrGroupServiceImpl extends ServiceImpl<AttrGroupDao, AttrGroupEnt
         // 1.1 查询所有分组
         AttrGroupDao baseMapper = this.getBaseMapper();
 
-//        return baseMapper.getAttrGroupWithAttrsBySpuId(spuId, catalogId);
-        return null;
+        List<SpuItemAttrGroup> attrGroupWithAttrsBySpuId = baseMapper.getAttrGroupWithAttrsBySpuId(spuId, catalogId);
+
+        return attrGroupWithAttrsBySpuId;
     }
 
 

@@ -1,5 +1,7 @@
 package com.xgsama.mall.search.vo;
 
+import lombok.Data;
+
 import java.util.List;
 
 /**
@@ -8,6 +10,7 @@ import java.util.List;
  * @author : xgSama
  * @date : 2021/10/6 18:22:08
  */
+@Data
 public class SearchParam {
 
     /**
@@ -20,8 +23,16 @@ public class SearchParam {
      */
     private Long catalog3Id;
 
+    /**
+     * 排序条件
+     * sort=saleCount_asc/desc
+     * sort=skuPrice_asc/desc
+     */
     private String sort;
 
+    /**
+     * 是否只显示有货
+     */
     private Integer hasStock;
 
     /**

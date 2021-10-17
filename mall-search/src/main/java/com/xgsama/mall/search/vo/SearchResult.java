@@ -12,6 +12,7 @@ import java.util.List;
  * @author : xgSama
  * @date : 2021/10/6 18:21:05
  */
+@Data
 public class SearchResult {
 
     /**

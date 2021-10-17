@@ -3,9 +3,11 @@ package com.xgsama.mall.product.service;
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.xgsama.common.utils.PageUtils;
 import com.xgsama.mall.product.entity.SkuInfoEntity;
+import com.xgsama.mall.product.vo.SkuItemVo;
 
 import java.util.List;
 import java.util.Map;
+import java.util.concurrent.ExecutionException;
 
 /**
  * sku信息
@@ -23,5 +25,7 @@ public interface SkuInfoService extends IService<SkuInfoEntity> {
     PageUtils getSkuByCondition(Map<String, Object> params);
 
     List<SkuInfoEntity> getSkusBySpuId(Long spuId);
+
+    SkuItemVo item(String skuId) throws ExecutionException, InterruptedException;
 }
 

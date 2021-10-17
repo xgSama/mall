@@ -15,7 +15,7 @@
         <!--品牌官方网站-->
         <div class="min">
             <ul class="header_ul_left">
-                <li class="glyphicon glyphicon-home"><a href="http://gulimall.com/" class="aa">京东首页</a></li>
+                <li class="glyphicon glyphicon-home"><a href="http://mall.com/" class="aa">京东首页</a></li>
                 <li class="glyphicon glyphicon-map-marker"><a href="/static/item/javascript:;">北京</a>
                     <ol id="beijing">
                         <li style="background: red;"><a href="/static/item/javascript:;" style="color: white;">北京</a>
@@ -60,15 +60,15 @@
             `
             <ul class="header_ul_right">
                 <li style="border: 0;">
-                    <a th:if="${session.loginUser == null}" href="http://auth.gulimall.com/login.html"
+                    <a th:if="${session.loginUser == null}" href="http://auth.mall.com/login.html"
                        class="aa">你好，请登录</a>
                     <a th:if="${session.loginUser != null}">欢迎, [[${session.loginUser.nickname}]]</a>
                 </li>
                 <li>
-                    <a th:if="${session.loginUser == null}" href="http://auth.gulimall.com/reg.html"
+                    <a th:if="${session.loginUser == null}" href="http://auth.mall.com/reg.html"
                        style="color: red;">免费注册</a>
                 </li>
-                <li><a href="http://member.gulimall.com/memberOrder.html" class="aa">我的订单</a> |</li>
+                <li><a href="http://member.mall.com/memberOrder.html" class="aa">我的订单</a> |</li>
                 <li class="jingdong"><a href="/static/item/javascript:;">我的京东</a><span
                         class="glyphicon glyphicon-menu-down">|</span>
                     <ol class="jingdong_ol">
@@ -264,11 +264,11 @@
     <nav>
         <div class="nav_min">
             <div class="nav_top">
-                <div class="nav_top_one"><a href="http://gulimall.com"><img src="/static/item/img/111.png"/></a></div>
+                <div class="nav_top_one"><a href="http://mall.com"><img src="/static/item/img/111.png"/></a></div>
                 <div class="nav_top_two"><input type="text"/>
                     <button>搜索</button>
                 </div>
-                <div class="nav_top_three"><a href="http://cart.gulimall.com/cart.html">我的购物车</a><span
+                <div class="nav_top_three"><a href="http://cart.mall.com/cart.html">我的购物车</a><span
                         class="glyphicon glyphicon-shopping-cart"></span>
                     <div class="nav_top_three_1">
                         <img src="/static/item/img/44.png"/>购物车还没有商品，赶紧选购吧！
@@ -523,15 +523,15 @@
                             <span>￥</span>
                             <span th:text="${#numbers.formatDecimal(item.info.price,3,2)}">4499.00</span>
                         </li>
-                        <li style="color: red" th:if="${item.seckillSkuVo != null}">
+                        <li style="color: red" th:if="${item.seckillInfoVo != null}">
 
-                            <span th:if="${#dates.createNow().getTime() < item.seckillSkuVo.startTime}">
-                                商品将会在[[${#dates.format(new java.util.Date(item.seckillSkuVo.startTime),"yyyy-MM-dd HH:mm:ss")}]]进行秒杀
+                            <span th:if="${#dates.createNow().getTime() < item.seckillInfoVo.startTime}">
+                                商品将会在[[${#dates.format(new java.util.Date(item.seckillInfoVo.startTime),"yyyy-MM-dd HH:mm:ss")}]]进行秒杀
                             </span>
 
                             <span
-                                    th:if="${#dates.createNow().getTime() >= item.seckillSkuVo.startTime && #dates.createNow().getTime() <= item.seckillSkuVo.endTime}">
-                                秒杀价  [[${#numbers.formatDecimal(item.seckillSkuVo.seckillPrice,1,2)}]]
+                                    th:if="${#dates.createNow().getTime() >= item.seckillInfoVo.startTime && #dates.createNow().getTime() <= item.seckillInfoVo.endTime}">
+                                秒杀价  [[${#numbers.formatDecimal(item.seckillInfoVo.seckillPrice,1,2)}]]
                             </span>
 
                         </li>
@@ -629,35 +629,12 @@
                                 <a th:attr=" class=${#lists.contains(#strings.listSplit(val.skuIds,','),item.info.skuId.toString())
                                    ? 'sku_attr_value checked': 'sku_attr_value'}, skus=${val.skuIds} "
                                 >
-                                    [[${val.attrValue}]]
+                                    [[ ${val.attrValue }]]
                                     <!--											<img src="/static/item/img/59ddfcb1Nc3edb8f1.jpg" /> -->
                                 </a>
                             </dd>
                         </dl>
                     </div>
-                    <!--							<div class="box-attr-2 clear">-->
-                    <!--								<dl>-->
-                    <!--									<dt>选择版本</dt>-->
-                    <!--									<dd>-->
-                    <!--										<a href="/static/item/#">标准版</a>-->
-                    <!--									</dd>-->
-                    <!--									<dd>-->
-                    <!--										<a href="/static/item/#">套装版</a>-->
-                    <!--									</dd>-->
-                    <!--								</dl>-->
-                    <!--							</div>-->
-
-                    <!--							<div class="box-attr-2 clear">-->
-                    <!--								<dl>-->
-                    <!--									<dt>选择内存</dt>-->
-                    <!--									<dd>-->
-                    <!--										<a href="/static/item/#">64GB</a>-->
-                    <!--									</dd>-->
-                    <!--									<dd>-->
-                    <!--										<a href="/static/item/#">128GB</a>-->
-                    <!--									</dd>-->
-                    <!--								</dl>-->
-                    <!--							</div>-->
                 </div>
 
                 <div class="box-btns clear">
@@ -680,16 +657,16 @@
                     </div>
 
                     <div class="box-btns-two"
-                         th:if="${item.seckillSkuVo == null }">
+                         th:if="${item.seckillInfoVo == null }">
                         <a class="addToCart" href="#" th:attr="skuId=${item.info.skuId}">
                             加入购物车
                         </a>
                     </div>
 
                     <div class="box-btns-two"
-                         th:if="${item.seckillSkuVo != null && (#dates.createNow().getTime() >= item.seckillSkuVo.startTime && #dates.createNow().getTime() <= item.seckillSkuVo.endTime)}">
+                         th:if="${item.seckillInfoVo != null && (#dates.createNow().getTime() >= item.seckillInfoVo.startTime && #dates.createNow().getTime() <= item.seckillInfoVo.endTime)}">
                         <a class="seckill" href="#"
-                           th:attr="skuId=${item.info.skuId},sessionId=${item.seckillSkuVo.promotionSessionId},code=${item.seckillSkuVo.randomCode}">
+                           th:attr="skuId=${item.info.skuId},sessionId=${item.seckillInfoVo.promotionSessionId},code=${item.seckillInfoVo.randomCode}">
                             立即抢购
                         </a>
                     </div>
@@ -855,19 +832,19 @@
         <div class="allquanbushop">
             <ul class="shopjieshao">
                 <li class="jieshoa" style="background: #e4393c;">
-                    <a href="/static/item/##" style="color: white;">商品介绍</a>
+                    <a style="color: white;">商品介绍</a>
                 </li>
                 <li class="baozhuang">
-                    <a href="/static/item/##">规格与包装</a>
+                    <a >规格与包装</a>
                 </li>
                 <li class="baozhang">
-                    <a href="/static/item/##">售后保障</a>
+                    <a >售后保障</a>
                 </li>
                 <li class="pingjia">
-                    <a href="/static/item/##">商品评价(4万+)</a>
+                    <a >商品评价(4万+)</a>
                 </li>
                 <li class="shuoming">
-                    <a href="/static/item/##">预约说明</a>
+                    <a >预约说明</a>
                 </li>
 
             </ul>
@@ -897,77 +874,10 @@
                 <ul class="xuanxiangka">
                     <li class="jieshoa actives" id="li1">
                         <div class="shanpinsssss">
-                            <!--									<p>-->
-                            <!--										<a href="/static/item/#">品牌:华为（HUAWEI）</a>-->
-                            <!--									</p>-->
-                            <!--									<table>-->
-                            <!--										<tr>-->
-                            <!--											<td>-->
-                            <!--												<a href="/static/item/##">商品名称：华为Mate 10</a>-->
-                            <!--											</td>-->
-                            <!--											<td>-->
-                            <!--												<a href="/static/item/##">商品毛重：0.58kg</a>-->
-                            <!--											</td>-->
-                            <!--											<td>-->
-                            <!--												<a href="/static/item/##">商品编号：5544038</a>-->
-                            <!--											</td>-->
-                            <!--											<td>-->
-                            <!--												<a href="/static/item/##">商品产地：中国大陆</a>-->
-                            <!--											</td>-->
-                            <!--										</tr>-->
-                            <!--										<tr>-->
-                            <!--											<td>-->
-                            <!--												<a href="/static/item/##">系统：安卓（Android）</a>-->
-                            <!--											</td>-->
-                            <!--											<td>-->
-                            <!--												<a href="/static/item/##">前置摄像头像素：800万-1599万</a>-->
-                            <!--											</td>-->
-                            <!--											<td>-->
-                            <!--												<a href="/static/item/##">后置摄像头像素：2000万及以上，1200万-1999万</a>-->
-                            <!--											</td>-->
-                            <!--											<td>-->
-                            <!--												<a href="/static/item/##">机身内存：128GB</a>-->
-                            <!--											</td>-->
-                            <!--										</tr>-->
-                            <!--										<tr>-->
-                            <!--											<td colspan="4">-->
-                            <!--												<a href="/static/item/##">全面屏，双卡双待，指纹识别，Type-C，VoLTE，2K屏，拍照神器，支持NFC，商务手机，安全手机，分辨率10</a>-->
-                            <!--											</td>-->
-                            <!--										</tr>-->
-                            <!--									</table>-->
                             <img class="xiaoguo" th:src="${descp}"
                                  th:each="descp : ${#strings.listSplit(item.desc.decript,',')}"/>
-                            <!--                            <div class="guiGebox guiGebox1">-->
-                            <!--                                <div class="guiGe">-->
-                            <!--                                    <h3 th:text="guige.groupName"></h3>-->
-                            <!--                                    <dl>-->
-                            <!--                                        <dt>品牌</dt>-->
-                            <!--                                        <dd>华为(HUAWEI)</dd>-->
-                            <!--                                        <dt>型号</dt>-->
-                            <!--                                        <dd class="Ptable-tips">-->
-                            <!--                                            <a href="/static/item/#"><i>？</i></a>-->
-                            <!--                                        </dd>-->
-                            <!--                                        <dd>ALP-AL00</dd>-->
-                            <!--                                        <dt>入网型号</dt>-->
-                            <!--                                        <dd class="Ptable-tips">-->
-                            <!--                                            <a href="/static/item/#"><i>？</i></a>-->
-                            <!--                                        </dd>-->
-                            <!--                                        <dd>ALP-AL00</dd>-->
-                            <!--                                        <dt>上市年份</dt>-->
-                            <!--                                        <dd>2017年</dd>-->
-                            <!--                                        <dt>上市时间</dt>-->
-                            <!--                                        <dd>10月</dd>-->
-                            <!--                                    </dl>-->
-                            <!--                                </div>-->
-                            <!--                                <div class="package-list">-->
-                            <!--                                    <h3>包装清单</h3>-->
-                            <!--                                    <p>手机（含内置电池） X 1、5A大电流华为SuperCharge充电器X 1、5A USB数据线 X 1、半入耳式线控耳机 X 1、快速指南X 1、三包凭证 X-->
-                            <!--                                        1、取卡针 X 1、保护壳 X 1</p>-->
-                            <!--                                </div>-->
-                            <!--                            </div>-->
                         </div>
                     </li>
-                    <li class="baozhuang actives" id="li2">
                     <li class="baozhuang actives" id="li2">
                         <div class="guiGebox">
                             <div class="guiGe" th:each="group : ${item.groupAttrs}">
@@ -1375,7 +1285,7 @@
             filterEle = $(filterEle).filter(skus[i])[0];
         }
 
-        location.href = "http://item.gulimall.com/" + filterEle + ".html";
+        location.href = "http://item.mall.com/" + filterEle + ".html";
 
         return false;
     });
@@ -1392,7 +1302,7 @@
     $(".addToCart").click(function () {
         let skuId = $(this).attr("skuId");
         let num = $("#productNum").val();
-        location.href = "http://cart.gulimall.com/addCartItem?skuId=" + skuId + "&num=" + num;
+        location.href = "http://cart.mall.com/addCartItem?skuId=" + skuId + "&num=" + num;
         return false;
     });
 
@@ -1402,7 +1312,7 @@
             var killId = $(this).attr("sessionid") + "-" + $(this).attr("skuid");
             var code = $(this).attr("code");
             var num = $("#productNum").val();
-            location.href = "http://seckill.gulimall.com/kill?killId=" + killId + "&key=" + code + "&num=" + num;
+            location.href = "http://seckill.mall.com/kill?killId=" + killId + "&key=" + code + "&num=" + num;
         } else {
             alert("秒杀请先登录");
         }

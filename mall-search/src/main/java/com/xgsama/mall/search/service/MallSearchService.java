@@ -9,7 +9,7 @@ import com.xgsama.mall.search.vo.SearchResult;
  * @author : xgSama
  * @date : 2021/10/6 18:20:20
  */
-public interface MallService {
+public interface MallSearchService {
 
     /**
      * 检索所有参数

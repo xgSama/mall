@@ -2,6 +2,8 @@ package com.xgsama.mall.search;
 
 import com.alibaba.fastjson.JSON;
 import com.xgsama.mall.search.config.ElasticSearchConfig;
+import com.xgsama.mall.search.service.impl.MallSearchServiceImpl;
+import com.xgsama.mall.search.vo.SearchParam;
 import org.elasticsearch.action.index.IndexRequest;
 import org.elasticsearch.action.index.IndexResponse;
 import org.elasticsearch.action.search.SearchRequest;
@@ -30,6 +32,14 @@ public class MallSearchTest {
 
     @Autowired
     private RestHighLevelClient client;
+
+    @Autowired
+    private MallSearchServiceImpl searchService;
+
+    @Test
+    public void testSearchService() {
+        searchService.search(new SearchParam());
+    }
 
     @Test
     public void contextLoads() {

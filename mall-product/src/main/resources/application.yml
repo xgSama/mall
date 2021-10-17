@@ -51,6 +51,13 @@ logging:
     com.xgsama.mall.product: debug
 
 
+
+mall:
+  thread:
+    core-size: 20
+    max-size: 200
+    keep-alive-time: 10
+
 minio:
   endpoint: http://minio:9555
   accessKey: dtstack
