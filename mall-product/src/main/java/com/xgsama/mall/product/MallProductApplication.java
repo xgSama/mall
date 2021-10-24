@@ -7,6 +7,7 @@ import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
 import org.springframework.cloud.openfeign.EnableFeignClients;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.ComponentScans;
+import org.springframework.session.data.redis.config.annotation.web.http.EnableRedisHttpSession;
 
 /**
  * MallProductApplication
@@ -14,6 +15,7 @@ import org.springframework.context.annotation.ComponentScans;
  * @author : xgSama
  * @date : 2021/9/9 20:06:52
  */
+@EnableRedisHttpSession
 @EnableFeignClients
 @EnableDiscoveryClient
 @SpringBootApplication

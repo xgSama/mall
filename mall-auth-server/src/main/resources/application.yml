@@ -1,0 +1,29 @@
+server:
+  port: 15000
+
+spring:
+  application:
+    name: mall-auth-server
+  cloud:
+    nacos:
+      discovery:
+        server-addr: nacos:8848
+  thymeleaf:
+    cache: false
+    suffix: .html
+    prefix: classpath:/templates/
+  jackson:
+    date-format: yyyy-MM-dd HH:mm:ss
+    time-zone: GMT+8
+  redis:
+    host: redis
+    port: 4396
+    database: 3
+  session:
+    store-type: redis
+    timeout: 30m
+
+
+logging:
+  level:
+    com.xgsama.mall.product: debug

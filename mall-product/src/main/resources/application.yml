@@ -26,6 +26,8 @@ spring:
     host: redis
     port: 4396
     database: 3
+  session:
+    store-type: redis
 
   # 配置使用Redis作为缓存
   cache:

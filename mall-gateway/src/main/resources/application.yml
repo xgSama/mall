@@ -51,6 +51,26 @@ spring:
           uri: lb://mall-search
           predicates:
             - Host=search.mall.com
+        - id: auth_route
+          uri: lb://mall-auth-server
+          predicates:
+            - Host=auth.mall.com
+        - id: seckill_route
+          uri: lb://mall-seckill
+          predicates:
+            - Host=seckill.mall.com
+        - id: cart_route
+          uri: lb://mall-cart
+          predicates:
+            - Host=cart.mall.com
+        - id: member_route
+          uri: lb://mall-member
+          predicates:
+            - Host=member.mall.com
+        - id: order_route
+          uri: lb://mall-order
+          predicates:
+            - Host=order.mall.com
 
         # 任何以mall.com结尾的域名转发到mall-product
         - id: mall_route
