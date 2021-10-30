@@ -10,6 +10,7 @@ import com.xgsama.mall.auth.vo.UserRegisterVo;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.support.DefaultMessageSourceResolvable;
 import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
@@ -83,7 +84,8 @@ public class LoginController {
     public String register(@Valid UserRegisterVo vo, BindingResult result, RedirectAttributes redirectAttributes) {
         if (result.hasErrors()) {
             // 将错误属性与错误信息一一封装
-            Map<String, String> errors = result.getFieldErrors().stream().collect(Collectors.toMap(FieldError::getField, fieldError -> fieldError.getDefaultMessage()));
+            Map<String, String> errors = result.getFieldErrors().stream()
+                    .collect(Collectors.toMap(FieldError::getField, DefaultMessageSourceResolvable::getDefaultMessage));
             // addFlashAttribute 这个数据只取一次
             redirectAttributes.addFlashAttribute("errors", errors);
             return "redirect:http://auth.mall.com/reg.html";

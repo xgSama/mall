@@ -8,6 +8,7 @@
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
         <module name="mall-coupon" />
+        <module name="mall-cart" />
         <module name="mall-ware" />
         <module name="mall-search" />
         <module name="renren-fast" />

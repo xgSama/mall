@@ -1,0 +1,39 @@
+server:
+  port: 40000
+
+spring:
+  application:
+    name: mall-cart
+  cloud:
+    nacos:
+      discovery:
+        server-addr: nacos:8848
+  redis:
+    port: 4396
+    host: redis
+    database: 3
+  thymeleaf:
+    cache: false
+
+#开启feign对sentinel的支持
+#feign:
+#  sentinel:
+#    enabled: true
+#  session:
+#    store-type: redis
+
+# 配置线程池
+mall:
+  thread:
+    coreSize: 20
+    maxSize: 200
+    keepAliveTime: 10
+
+#暴露所有端点
+management:
+  endpoints:
+    web:
+      exposure:
+        include: '*'
+
+

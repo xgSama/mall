@@ -1302,7 +1302,8 @@
     $(".addToCart").click(function () {
         let skuId = $(this).attr("skuId");
         let num = $("#productNum").val();
-        location.href = "http://cart.mall.com/addCartItem?skuId=" + skuId + "&num=" + num;
+        location.href = "http://cart.mall.com/addToCart?skuId=" + skuId + "&num=" + num;
+        console.log("http://cart.mall.com/addToCart?skuId=" + skuId + "&num=" + num)
         return false;
     });
 

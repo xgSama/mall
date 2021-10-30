@@ -10,7 +10,7 @@ import java.util.List;
 
 /**
  * sku销售属性&值
- * 
+ *
  * @author xgsama
  * @email china_cyzyc@163.com
  * @date 2021-09-09 19:51:53
@@ -19,4 +19,6 @@ import java.util.List;
 public interface SkuSaleAttrValueDao extends BaseMapper<SkuSaleAttrValueEntity> {
 
     List<ItemSaleAttrVo> getSaleAttrsBuSpuId(@Param("spuId") Long spuId);
+
+    List<String> getSkuSaleAttrValueAsStringList(@Param("skuId") Long skuId);
 }
